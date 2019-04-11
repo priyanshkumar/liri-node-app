@@ -7,17 +7,20 @@ var fs = require("fs");
 
 var Spotify = require("node-spotify-api");
 
+var spotify = new Spotify({
+  id: key.spotify.id,
+  secret: key.spotify.secret
+});
+
 var option = process.argv[2];
 var search = process.argv.slice(3).join("+");
-
-spotifyThisAPI();
 
 switch (option) {
   case "concert-this":
     concertThis(search);
     break;
   case "spotify-this-song":
-    spotify();
+    spotifySong(search);
     break;
   case "movie-this":
     movieThis(search);
@@ -32,10 +35,9 @@ switch (option) {
         case "concert-this":
           var query = name[0].split(" ");
           concertThis(query[1]);
-
           break;
         case "spotify-this-song":
-          spotify();
+          spotifySong(names);
           break;
         case "movie-this":
           movieThis(names);
@@ -107,20 +109,19 @@ function movieThis(movie) {
 }
 
 // func spotify
-function spotifyThisAPI() {
-  var spotify = new Spotify({
-    id: "09d25a091b084cd285a62b82bec622d7",
-    secret: "09d25a091b084cd285a62b82bec622d7"
-  });
-
-  spotify.search({ type: "track", query: "All the Small Things" }, function(
-    err,
-    data
-  ) {
-    if (err) {
-      return console.log("Error occurred: " + err);
-    }
-
-    console.log(data);
-  });
+function spotifySong(song) {
+  spotify
+    .search({ type: "track", query: song })
+    .then(function(response) {
+      var sName = song.split("+").join(" ");
+      console.log("Name of Song: " + sName);
+      console.log("Artist: " + response.tracks.items[0].album.artists[0].name);
+      console.log("Album: " + response.tracks.items[0].album.name);
+      console.log(
+        "Preview Link: " + response.tracks.items[0].external_urls.spotify
+      );
+    })
+    .catch(function(err) {
+      console.log(err);
+    });
 }
