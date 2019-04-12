@@ -29,18 +29,21 @@ switch (option) {
     fs.readFile("random.txt", "utf8", function(err, data) {
       var command = data.split(",");
       var name = command[1].split("\r\n");
-      var names = name[0];
+      var names = name[0].replace(/"/g, "");
+      console.log(names);
 
       switch (command[0]) {
         case "concert-this":
-          var query = name[0].split(" ");
-          concertThis(query[1]);
+          concertThis(names);
           break;
         case "spotify-this-song":
           spotifySong(names);
           break;
         case "movie-this":
           movieThis(names);
+          break;
+        default:
+          console.log("Command did not dound or wrong in random.txt");
           break;
       }
       if (err) {
@@ -55,7 +58,6 @@ switch (option) {
 
 // func concert-this
 function concertThis(artist) {
-  console.log(artist);
   axios({
     method: "GET",
     url:
@@ -110,6 +112,9 @@ function movieThis(movie) {
 
 // func spotify
 function spotifySong(song) {
+  if (!song) {
+    song = "The+Sign";
+  }
   spotify
     .search({ type: "track", query: song })
     .then(function(response) {

@@ -19,6 +19,7 @@
        * Venue location
        * Date of the Event (use moment to format this as "MM/DD/YYYY")
        ```
+       ![concert-this](/snapshot/concert.jpg)
 
   2. spotify-this-song:
 
@@ -29,6 +30,7 @@
        * A preview link of the song from Spotify
        * The album that the song is from
        ```
+       ![concert-this](/snapshot/spotify.jpg)
 
   3. movie-this:
 
@@ -43,10 +45,20 @@
        * Plot of the movie.
        * Actors in the movie.
        ```
+       ![concert-this](/snapshot/movie.jpg)
 
   4. do-what-it-says:
 
      - As soon as compiler gets command from terminal it will read data from random.txt with help of fs and throw the qury again for anyone of the above phase with help of nested switch case as per phase mention in random.txt
+
+       - do-what-it-says concert-this
+         ![concert-this](/snapshot/do-concert.jpg)
+
+       * do-what-it-says spotify-this-song
+         ![concert-this](/snapshot/do-spotify.jpg)
+
+       - do-what-it-says movie-this
+         ![concert-this](/snapshot/do-movie.jpg)
 
 ### Build with:
 
